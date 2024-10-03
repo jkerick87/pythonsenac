@@ -25,9 +25,9 @@ while opcao=='s':
         #if opcao !='n' or opcao!= 's':
         print("Operação inválida")
         opcao = input("Deseja continuar advinhando(s/n)? -> ").lower()
-    if opcao == 's':
-        os.system('cls')
-        contador = 0
-    else:
-        os.system('cls')
-        print("Até Logo!!!")
+        if opcao == 's':
+            os.system('cls')
+            contador = 0
+        else:
+            os.system('cls')
+            print("Até Logo!!!")
