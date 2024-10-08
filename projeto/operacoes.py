@@ -29,10 +29,10 @@ def consultar_conta(contas):
     if numero_conta in contas:
         conta = contas[numero_conta]
         print(f"Nome: {conta['nome']}, Saldo: {conta['saldo']:.2f}")
-    else:
-        print("Conta não encontrada.")
+    # else:
+    #     print("Conta não encontrada.")
         
-    return conta['nome'],conta['saldo']
+    return conta,conta['nome'],conta['saldo']
 
 def carregar_contas():
     try:
@@ -41,12 +41,19 @@ def carregar_contas():
     except FileNotFoundError:
         return {}
     
-def depositar_dinheiro(contas):
-    cliente = consultar_conta(contas)
+def depositar_dinheiro(contas,conta_alvo,novo_valor):
     
-    print(cliente)
-    print("Valor Atualizado!!!")
-    
+    for conta in contas:
+        print(f"CONTA: {contas}, Novo Valor: {novo_valor}")
+        if conta_alvo in conta :
+            conta = contas[conta_alvo]
+            conta['saldo'] += novo_valor
+            print(f"CONTA: {conta['saldo']}")
+    #         
+    #         print(f"Valor atualizado para a conta {conta_alvo}: {novo_valor}")
+    #         return
+    # print(f"Conta {conta_alvo} não encontrada.")
+       
 
 def main():
     contas = carregar_contas()
@@ -63,13 +70,19 @@ def main():
                  
         elif opcao == '2':
             try:
-                nome,saldo = consultar_conta(contas)
-                print(f'Saldo: {saldo}')
+                conta,nome,saldo = consultar_conta(contas)
+                #print(f'Saldo: {saldo}')
             except UnboundLocalError:
                 print("Conta não existe.")
                 
         elif opcao == '3':
-            depositar_dinheiro(contas)
+            conta_alvo = input("Digite a conta: ")
+            novo_valor = int(input("Digite o valor do deposito: "))
+            depositar_dinheiro(contas,conta_alvo,novo_valor)
+            #print(f"Conta:{conta}, nome:{nome}, Saldo: {saldo} ")
+            
+            # depositar_dinheiro()
+            
         elif opcao == '5':
             print("Saindo...")
             break
