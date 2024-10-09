@@ -1,13 +1,6 @@
 import json
+import menu
 
-def menu():
-    print("Menu:")
-    print("1. Criar conta")
-    print("2. Consultar saldo")
-    print("3. Depositar")
-    print("4. Sacar")
-    print("5. Sair")
-    
 def carregar_contas():
     try:
         with open('contas.txt', 'r') as file:
@@ -23,7 +16,13 @@ def salvar_arquivo(contas):
 
 def criar_conta(contas):
     nome = input("Digite o nome do titular: ")
-    numero_conta = input("Digite o número da conta: ")
+    while True:
+        numero_conta = input("Digite o número da conta: ")
+        if numero_conta.isdigit():  # Verifica se a entrada contém apenas dígitos
+            break  
+        else:
+            print("Por favor, digite apenas números.")
+            
     saldo = float(input("Digite o saldo inicial: "))
 
     contas[numero_conta] = {
@@ -38,7 +37,7 @@ def consultar_conta(contas):
     numero_conta = input("Digite o número da conta para consulta: ")
     if numero_conta in contas:
         conta = contas[numero_conta]
-        print(f"Nome: {conta['nome'].upper()}, Saldo: {conta['saldo']:.2f}")
+        print(f"Saldo: {conta['saldo']:.2f}")
     else:
         print("Conta não encontrada.")
 
@@ -74,20 +73,17 @@ def main():
     contas = carregar_contas()
 
     while True:
-        menu()
+        menu.menu()
         opcao = input("Escolha uma opção: ")
         
         if opcao == '1':
             criar_conta(contas)
 
         elif opcao == '2':
-            try:
-                consultar_conta(contas)
-            except UnboundLocalError:
-                print("Conta não existe!!!")
-                
+            consultar_conta(contas)
+ 
         elif opcao == '3':
-                depositar_dinheiro(contas)
+            depositar_dinheiro(contas)
         
         elif opcao == '4':
             sacar_dinheiro(contas) 
